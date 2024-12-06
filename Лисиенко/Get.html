@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="Add.html">Добавить заявку</a>
+    <table border="1">
+        <tr><td>Номер заявки</td>
+        <td>Дата обновления</td>
+        <td>Вид оргтехники</td>
+        <td>Модель</td>
+        <td>Описание проблемы</td>
+        <td>ФИО клиента</td>
+        <td>Номер телефона</td>
+        <td>Статус</td></tr>
+    </table>
+    <script>
+            let table = document.querySelector("table")
+            GetOrders()
+
+            async function GetOrders()
+            {
+                let response = await fetch("https://localhost:7034", { method:"GET"})
+                let orders = await response.json()
+                
+                orders.forEach(o => {
+                    let tr = document.createElement("tr")
+
+                    tr.innerHTML = `
+                        <td>${o.number}</td>
+                        <td>${o.date}</td>
+                        <td>${o.type}</td>
+                        <td>${o.model}</td>
+                        <td>${o.description}</td>
+                        <td>${o.fio}</td>
+                        <td>${o.phoneNumber}</td>
+                        <td>${o.status}</td>`
+
+                    table.append(tr)
+                });
+            }
+    </script>
+</body>
+</html>
